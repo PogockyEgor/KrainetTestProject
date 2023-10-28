@@ -22,7 +22,7 @@ public class Candidate {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tests_id_seq_gen")
     @SequenceGenerator(name = "tests_id_seq_gen", sequenceName = "tests_id_seq", allocationSize = 1)
-    private int id;
+    private Integer id;
 
     @Column(name = "lastname")
     private String lastname;

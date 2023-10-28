@@ -22,7 +22,7 @@ public class Direction {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "direction_id_seq_gen")
     @SequenceGenerator(name = "direction_id_seq_gen", sequenceName = "direction_id_seq", allocationSize = 1)
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;

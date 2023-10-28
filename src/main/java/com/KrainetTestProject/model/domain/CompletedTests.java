@@ -26,7 +26,7 @@ public class CompletedTests {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "completedTests_id_seq_gen")
     @SequenceGenerator(name = "completedTests_id_seq_gen", sequenceName = "completedTests_id_seq", allocationSize = 1)
-    private int id;
+    private Integer id;
 
     @Column(name = "date")
     private Date date;
