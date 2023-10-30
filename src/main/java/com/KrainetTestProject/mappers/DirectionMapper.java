@@ -1,6 +1,7 @@
 package com.KrainetTestProject.mappers;
 
 import com.KrainetTestProject.model.domain.Direction;
+import com.KrainetTestProject.model.domain.Test;
 import com.KrainetTestProject.model.request.DirectionRequest;
 import com.KrainetTestProject.model.response.DirectionResponse;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,10 @@ public class DirectionMapper {
         DirectionResponse directionResponse = new DirectionResponse();
         directionResponse.setName(direction.getName());
         directionResponse.setDescription(direction.getDescription());
+        for (Test test : direction.getTestList()){
+            test.setDirectionList(null);
+        }
+        directionResponse.setTests(direction.getTestList());
         return directionResponse;
     }
 }

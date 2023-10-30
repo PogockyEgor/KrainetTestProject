@@ -1,18 +1,14 @@
-package com.KrainetTestProject.model.response;
+package com.KrainetTestProject.model.request;
 
-import com.KrainetTestProject.model.domain.Test;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DirectionResponse {
+public class TestRequest {
 
     private String name;
     private String description;
-    private List<Test> tests;
 }

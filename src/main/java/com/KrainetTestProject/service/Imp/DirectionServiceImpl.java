@@ -8,6 +8,7 @@ import com.KrainetTestProject.repository.DirectionRepository;
 import com.KrainetTestProject.service.DirectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,14 @@ public class DirectionServiceImpl implements DirectionService {
     }
 
     @Override
-    public Page<Direction> getAllDirectionsFromFirstToLast(int first, int last, Pageable pageable) {
-        return directionRepository.findAllByIdBetween(first, last, pageable);
+    public Page<DirectionResponse> getAllDirectionsFromFirstToLast(int first, int last, Pageable pageable) {
+        List<Direction> directions = directionRepository.findAllByIdBetween(first, last, pageable).getContent();
+        ArrayList<DirectionResponse> directionResponses = new ArrayList<>();
+        for (Direction direction : directions){
+            directionResponses.add(directionMapper.fromDirectionToDirectionResponse(direction));
+        }
+        Page<DirectionResponse> directionResponsePage = new PageImpl<>(directionResponses, pageable,directionResponses.size());
+        return directionResponsePage;
     }
 
     @Override

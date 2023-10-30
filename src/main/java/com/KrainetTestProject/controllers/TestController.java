@@ -1,12 +1,11 @@
 package com.KrainetTestProject.controllers;
 
-import com.KrainetTestProject.model.domain.Direction;
-import com.KrainetTestProject.model.request.DirectionRequest;
-import com.KrainetTestProject.model.response.DirectionResponse;
-import com.KrainetTestProject.service.Imp.DirectionServiceImpl;
+import com.KrainetTestProject.model.domain.Test;
+import com.KrainetTestProject.model.request.TestRequest;
+import com.KrainetTestProject.model.response.TestResponse;
+import com.KrainetTestProject.service.Imp.TestServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,43 +19,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 @RestController
-@RequestMapping("/direction")
-public class DirectionController {
+@RequestMapping("/test")
+public class TestController {
 
-    DirectionServiceImpl directionService;
+    TestServiceImpl testService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    public DirectionController(DirectionServiceImpl directionService) {
-        this.directionService = directionService;
+    public TestController(TestServiceImpl testService) {
+        this.testService = testService;
     }
 
     @GetMapping
     public ResponseEntity<?> getAllDirectories(@PageableDefault Pageable pageable,
                                                @RequestParam int first,
                                                @RequestParam int last) {
-        logger.info("get request to /direction");
-        Page<DirectionResponse> allDirections = directionService.getAllDirectionsFromFirstToLast(first, last, pageable);
-        return new ResponseEntity<>(allDirections, HttpStatus.OK);
+        logger.info("get request to /test");
+        Page<TestResponse> allTests = testService.getAllTests(first, last, pageable);
+        return new ResponseEntity<>(allTests, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> createDirection(@RequestBody DirectionRequest direction){
-        logger.info("post request to /direction");
-        directionService.createDirection(direction);
+    public ResponseEntity<?> createDirection(@RequestBody TestRequest testRequest) {
+        logger.info("post request to /test");
+        testService.createTest(testRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateDirection(@RequestBody Direction direction){
-        logger.info("put request to /direction");
-        directionService.updateDirection(direction);
+    public ResponseEntity<?> updateDirection(@RequestBody Test test) {
+        logger.info("put request to /test");
+        testService.updateTest(test);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
