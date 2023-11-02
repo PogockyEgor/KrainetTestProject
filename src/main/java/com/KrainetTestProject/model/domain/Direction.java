@@ -36,4 +36,7 @@ public class Direction {
 
     @ManyToMany(mappedBy = "directionList")
     private List<Test> testList = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "directionList")
+    private List<Candidate> candidateList = new ArrayList<>();
 }

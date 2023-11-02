@@ -43,4 +43,6 @@ public class Test {
             joinColumns = @JoinColumn(name = "test_id"),
             inverseJoinColumns = @JoinColumn(name = "direction_id"))
     private List<Direction> directionList = new ArrayList<>();
+
+
 }

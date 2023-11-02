@@ -1,5 +1,6 @@
 package com.KrainetTestProject.mappers;
 
+import com.KrainetTestProject.model.domain.Candidate;
 import com.KrainetTestProject.model.domain.Direction;
 import com.KrainetTestProject.model.domain.Test;
 import com.KrainetTestProject.model.request.DirectionRequest;
@@ -20,10 +21,16 @@ public class DirectionMapper {
         DirectionResponse directionResponse = new DirectionResponse();
         directionResponse.setName(direction.getName());
         directionResponse.setDescription(direction.getDescription());
-        for (Test test : direction.getTestList()){
+        direction.getTestList().forEach(test -> test.setDirectionList(null));
+        /*for (Test test : direction.getTestList()){
             test.setDirectionList(null);
-        }
+        }*/
         directionResponse.setTests(direction.getTestList());
+        for (Candidate candidate : direction.getCandidateList()){
+            candidate.setDirectionList(null);
+            candidate.setCompletedTests(null);
+        }
+        directionResponse.setCandidateList(direction.getCandidateList());
         return directionResponse;
     }
 }

@@ -15,17 +15,17 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "test_result")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "completedTests")
-public class CompletedTests {
+public class TestResult {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "completedTests_id_seq_gen")
-    @SequenceGenerator(name = "completedTests_id_seq_gen", sequenceName = "completedTests_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "testResult_id_seq_gen")
+    @SequenceGenerator(name = "testResult_id_seq_gen", sequenceName = "testResult_id_seq", allocationSize = 1)
     private Integer id;
 
     @Column(name = "date")
@@ -35,10 +35,6 @@ public class CompletedTests {
     private int grade;
 
     @ManyToOne
-    @JoinColumn(name = "candidate_id", nullable = false)
-    private Candidate candidate;
-
-    @ManyToOne
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
+    @JoinColumn(name = "completed_test_id", nullable = false)
+    private CompletedTest completedTest;
 }

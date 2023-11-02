@@ -23,6 +23,7 @@ public class TestMapper {
         testResponse.setDescription(test.getDescription());
         for (Direction direction : test.getDirectionList()){
             direction.setTestList(null);
+            direction.setCandidateList(null);
         }
         testResponse.setDirectionList(test.getDirectionList());
         return testResponse;
