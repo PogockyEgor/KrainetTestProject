@@ -20,12 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 @RestController
-@RequestMapping("/direction")
+@RequestMapping(value = "/direction")
 public class DirectionController {
 
     DirectionServiceImpl directionService;
@@ -47,14 +43,14 @@ public class DirectionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createDirection(@RequestBody DirectionRequest direction){
+    public ResponseEntity<?> createDirection(@RequestBody DirectionRequest direction) {
         logger.info("post request to /direction");
         directionService.createDirection(direction);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateDirection(@RequestBody Direction direction){
+    public ResponseEntity<?> updateDirection(@RequestBody Direction direction) {
         logger.info("put request to /direction");
         directionService.updateDirection(direction);
         return new ResponseEntity<>(HttpStatus.OK);

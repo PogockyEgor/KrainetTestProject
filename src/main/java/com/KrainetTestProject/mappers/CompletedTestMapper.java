@@ -1,22 +1,15 @@
 package com.KrainetTestProject.mappers;
 
-import com.KrainetTestProject.model.domain.Candidate;
 import com.KrainetTestProject.model.domain.CompletedTest;
-import com.KrainetTestProject.model.domain.Direction;
 import com.KrainetTestProject.model.domain.TestResult;
-import com.KrainetTestProject.model.request.CandidateRequest;
 import com.KrainetTestProject.model.request.CompletedTestRequest;
-import com.KrainetTestProject.model.response.CandidateResponse;
 import com.KrainetTestProject.model.response.CompletedTestResponse;
 import com.KrainetTestProject.repository.CandidateRepository;
-import com.KrainetTestProject.repository.CompletedTestsRepository;
 import com.KrainetTestProject.repository.TestRepository;
 import com.KrainetTestProject.repository.TestResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.util.HashSet;
 import java.util.Set;
 
 @Component

@@ -44,7 +44,9 @@ public class TestServiceImpl implements TestsService {
     }
 
     @Override
-    public void updateTest(Test test) {
+    public void updateTest(TestRequest testRequest, int testId) {
+        Test test = testMapper.fromTestRequestToTest(testRequest);
+        test.setId(testId);
         testRepository.save(test);
     }
 }

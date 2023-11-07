@@ -14,5 +14,5 @@ public interface CandidateService {
 
     Page<CandidateResponse> getAllCandidates(int first, int last, Pageable pageable);
     void createCandidate(MultipartFile cv, MultipartFile photo, CandidateRequest candidateRequest) throws IOException;
-    void updateCandidate(Candidate candidate);
+    void updateCandidate(MultipartFile cv, MultipartFile photo, int candidateId, CandidateRequest candidateRequest) throws IOException;
 }

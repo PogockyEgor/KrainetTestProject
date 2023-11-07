@@ -22,9 +22,6 @@ public class DirectionMapper {
         directionResponse.setName(direction.getName());
         directionResponse.setDescription(direction.getDescription());
         direction.getTestList().forEach(test -> test.setDirectionList(null));
-        /*for (Test test : direction.getTestList()){
-            test.setDirectionList(null);
-        }*/
         directionResponse.setTests(direction.getTestList());
         for (Candidate candidate : direction.getCandidateList()){
             candidate.setDirectionList(null);

@@ -12,5 +12,5 @@ public interface CompletedTestService {
 
     Page<CompletedTestResponse> getAllTests(int first, int last, Pageable pageable);
     void createCompletedTest(CompletedTestRequest completedTestsRequest);
-    void updateCompletedTest(CompletedTest completedTests);
+    void updateCompletedTest(CompletedTestRequest completedTestRequest, int completedTestId);
 }

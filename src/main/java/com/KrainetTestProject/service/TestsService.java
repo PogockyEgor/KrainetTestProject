@@ -12,5 +12,5 @@ public interface TestsService {
 
     Page<TestResponse> getAllTests(int first, int last, Pageable pageable);
     void createTest(TestRequest testRequest);
-    void updateTest(Test test);
+    void updateTest(TestRequest testRequest, int id);
 }

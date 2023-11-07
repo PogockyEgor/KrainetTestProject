@@ -31,8 +31,8 @@ public class Candidate {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tests_id_seq_gen")
-    @SequenceGenerator(name = "tests_id_seq_gen", sequenceName = "tests_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "candidate_id_seq_gen")
+    @SequenceGenerator(name = "candidate_id_seq_gen", sequenceName = "candidate_id_seq", allocationSize = 1)
     private Integer id;
 
     @Column(name = "lastname")

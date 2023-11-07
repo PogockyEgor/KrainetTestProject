@@ -44,21 +44,27 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void createCandidate(MultipartFile cv, MultipartFile photo, CandidateRequest candidateRequest) throws IOException {
+        String cvPathname = "app/" + candidateRequest.getLastname() + candidateRequest.getFirstname() + "_CV." + cv.getContentType();
+        String photoPathname = "app/" + candidateRequest.getLastname() + candidateRequest.getFirstname() + "_Photo." + cv.getContentType();
+        candidateRequest.setCv(cvPathname);
+        candidateRequest.setPhoto(photoPathname);
+        cv.transferTo(new File(cvPathname));
+        photo.transferTo(new File(photoPathname));
+        candidateRepository.save(candidateMapper.fromCandidateRequestToCandidate(candidateRequest));
+    }
+
+    @Override
+    public void updateCandidate(MultipartFile cv, MultipartFile photo, int candidateId, CandidateRequest candidateRequest) throws IOException {
         String cvPathname = "C:\\Users\\user\\IdeaProjects\\KrainetTestProject\\src\\main\\resources\\uploads\\"
                 + candidateRequest.getLastname() + candidateRequest.getFirstname() + "_CV";
         String photoPathname = "C:\\Users\\user\\IdeaProjects\\KrainetTestProject\\src\\main\\resources\\uploads\\"
-                + candidateRequest.getLastname() + candidateRequest.getFirstname() + "_Photo";
+                +candidateRequest.getLastname() + candidateRequest.getFirstname() + "_Photo";
         candidateRequest.setCv(cvPathname);
         candidateRequest.setPhoto(photoPathname);
         cv.transferTo(new File(cvPathname));
         photo.transferTo(new File(photoPathname));
         Candidate candidate = candidateMapper.fromCandidateRequestToCandidate(candidateRequest);
-        System.out.println(candidate);
-        candidateRepository.save(candidateMapper.fromCandidateRequestToCandidate(candidateRequest));
-    }
-
-    @Override
-    public void updateCandidate(Candidate candidate) {
+        candidate.setId(candidateId);
         candidateRepository.save(candidate);
     }
 }

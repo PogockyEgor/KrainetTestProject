@@ -1,0 +1,433 @@
+openapi: 3.0.0
+info:
+  title: cvService API Документация
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+    description: dev server
+paths:
+  /direction:
+    get:
+      summary: Метод получения всех направлений. Метод имеет пагинацию, сортировку и фильтрацию
+      parameters: 
+        - name: pageable
+          in: query
+          required: true
+          description: Управляет параметрами page (определяет номер просматриваемой страницы), size (кол-во объектов на странице) и sort (сортировку по выбранному параметру)
+          schema:
+            $ref: "#/components/schemas/Pageable"
+        - name: first
+          in: query
+          required: true
+          description: Указывает первый элемент сортировки
+          schema:
+            type: integer
+            example: 0
+        - name: last
+          in: query
+          required: true
+          description: Указывает последний элемент сортировки
+          schema:
+            type: integer
+            example: 10    
+      tags:
+        - Direction
+      operationId: getAllDirections
+      responses:
+        "200":
+          description: Успешный ответ со списком направлений
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Directions"
+    post:
+      summary: Метод создания направления
+      requestBody:
+        description: Необходимые параметры для создания направления (directionRequest)
+        content:
+          application/json:
+            example: {"name": "frontend", "description": "frontend developer"}
+      tags:
+        - Direction
+      operationId: createDirection
+      responses:
+        "201":
+          description: Успешный ответ о создании объекта
+    put:
+      summary: Метод изменения направления
+      requestBody:
+        description: Необходимые параметры для изменения направления
+        content:
+          application/json:
+            example: {"id": 1, "name": "frontend", "description": "frontend developer"}
+      tags:
+        - Direction
+      operationId: updateDirection
+      responses:
+        "200":
+          description: Успешный ответ об изменении объекта
+          
+  /test:
+    get:
+      summary: Метод получения всех тестов
+      description: Метод возвращает все существующие тесты. Метод имеет пагинацию, сортировку и фильтрацию
+      parameters: 
+        - name: pageable
+          in: query
+          required: true
+          description: Управляет параметрами page (определяет номер просматриваемой страницы), size (кол-во объектов на странице) и sort (сортировку по выбранному параметру)
+          schema:
+            $ref: "#/components/schemas/Pageable"
+        - name: first
+          in: query
+          required: true
+          description: Указывает первый элемент сортировки
+          schema:
+            type: integer
+            example: 0
+        - name: last
+          in: query
+          required: true
+          description: Указывает последний элемент сортировки
+          schema:
+            type: integer
+            example: 10    
+      tags:
+        - Test
+      operationId: getAllTests
+      responses:
+        "200":
+          description: Успешный ответ со списком направлений
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Tests"
+    post:
+      summary: Метод создания теста
+      description: Метод создает новый тест
+      requestBody:
+        description: Название теста, его описание и список направлений (их id)
+        content:
+          application/json:
+            example: {"name": "cvService", "description": "test for backend developers", "directions": [1]}
+      tags:
+        - Test
+      operationId: createTest
+      responses:
+        "201":
+          description: Успешный ответ о создании объекта
+    put:
+      summary: Метод изменения теста
+      requestBody:
+        description: Параметры, необходимые для изменения объекта test
+        content:
+          application/json:
+            example: {"id": 1, "name": "frontend", "description": "frontend developer"}
+      tags:
+        - Test
+      operationId: updateTest
+      responses:
+        "200":
+          description: Успешный ответ об изменении объекта
+          
+  /candidate:
+    get:
+      summary: Метод получения всех кандидатов
+      description: Метод возвращает всех существующих кандидатов с направлениями, на которые кандидат претендует. Метод имеет пагинацию, сортировку и фильтрацию
+      parameters: 
+        - name: pageable
+          in: query
+          required: true
+          description: Управляет параметрами page (определяет номер просматриваемой страницы), size (кол-во объектов на странице) и sort (сортировку по выбранному параметру)
+          schema:
+            $ref: "#/components/schemas/Pageable"
+        - name: first
+          in: query
+          required: true
+          description: Указывает первый элемент сортировки
+          schema:
+            type: integer
+            example: 0
+        - name: last
+          in: query
+          required: true
+          description: Указывает последний элемент сортировки
+          schema:
+            type: integer
+            example: 10    
+      tags:
+        - Candidate
+      operationId: getAllCandidates
+      responses:
+        "200":
+          description: Успешный ответ со списком кандидатов
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidates"
+    post:
+      summary: Метод создания кандидата
+      description: Метод создает нового кандидата, пользователь передает фио, описание кандидата и 2 файла с фото и CV кандидата
+      parameters:
+        - name: json
+          in: query
+          description: Содержит json описание кандидата, его фио и описание
+          required: true
+          schema:
+            type: string
+            example: {"lastname": "Pogockiy","firstname": "Egor","secondname": "Stanislavovich","description": "best candidate", "directions": [1]}
+      requestBody:
+        description: Файлы CV и Photo кандидата
+        content:
+          application/json:
+            example: {"cv": "path/to/file/cv.pdf", "photo": "path/to/file/photo.png"}
+      tags:
+        - Candidate
+      operationId: createCandidate
+      responses:
+        "201":
+          description: Успешный ответ о создании объекта
+    put:
+      summary: Метод изменения кандидата
+      description: Метод изменяет кандидата, пользователь передает фио, описание кандидата, его id и 2 файла с фото и CV кандидата
+      parameters:
+        - name: id
+          in: query
+          description: Id изменяемого кандидата
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - name: json
+          in: query
+          description: Содержит json описание кандидата, его фио и описание
+          required: true
+          schema:
+            type: string
+            example: {"lastname": "Pogockiy","firstname": "Egor","secondname": "Stanislavovich","description": "best candidate", "directions": [1]}
+      requestBody:
+        description: Файлы CV и Photo кандидата
+        content:
+          application/json:
+            example: {"cv": "path/to/file/cv.pdf", "photo": "path/to/file/photo.png"}
+      tags:
+        - Candidate
+      operationId: updateCandidate
+      responses:
+        "200":
+          description: Успешный ответ об измнении объекта
+          
+  /completedTest:
+    get:
+      summary: Метод получения всех выполненных тестов. Метод имеет пагинацию, сортировку и фильтрацию
+      parameters: 
+        - name: pageable
+          in: query
+          required: true
+          description: Управляет параметрами page (определяет номер просматриваемой страницы), size (кол-во объектов на странице) и sort (сортировку по выбранному параметру)
+          schema:
+            $ref: "#/components/schemas/Pageable"
+        - name: first
+          in: query
+          required: true
+          description: Указывает первый элемент сортировки
+          schema:
+            type: integer
+            example: 0
+        - name: last
+          in: query
+          required: true
+          description: Указывает последний элемент сортировки
+          schema:
+            type: integer
+            example: 10    
+      tags:
+        - CompletedTest
+      operationId: getAllCompletedTests
+      responses:
+        "200":
+          description: Успешный ответ со списком выполненных тестов
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletedTest"
+    post:
+      summary: Метод создания выполненного теста
+      description: Метод создает объект выполненного теста со списком результатов
+      requestBody:
+        description: Id кандидата, выполняющего тест, id выполняемого теста и массив с объектами результатов теста, содержащих оценку за выполнение и дату выполнения
+        content:
+          application/json:
+            example: {"candidateId": 1,"testId": 1,"testResults":[{"date": "2023-11-07","grade": 10}]}
+      tags:
+        - CompletedTest
+      operationId: createCompletedTest
+      responses:
+        "201":
+          description: Успешный ответ о создании объекта
+    put:
+      summary: Метод изменения выполненного теста
+      description: Метод изменяет объект выполненного теста
+      parameters: 
+        - name: id
+          in: query
+          required: true
+          description: id изменяемого выполненного теста
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        description: Id кандидата, выполняющего тест, id выполняемого теста и массив с объектами результатов теста, содержащих оценку за выполнение и дату выполнения
+        content:
+          application/json:
+            example: {"candidateId": 1,"testId": 1,"testResults":[{"date": "2023-11-07","grade": 10}]}
+      tags:
+        - CompletedTest
+      operationId: updateCompletedTest
+      responses:
+        "200":
+          description: Успешный ответ об изменении объекта
+        
+components:
+  schemas:
+    Pageable:
+      type: object
+      required:
+        - page
+        - size
+      properties:
+        page:
+          type: integer
+          example: 0
+        size:
+          type: integer
+          example: 1
+        sort:
+          type: array
+          items:
+            type: string
+            example: id
+    Direction:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        direction_id:
+          type: integer
+          example: 1
+        name:
+          description: Название направления
+          type: string
+          example: Backend
+        description:
+          description: Описание направления
+          type: string
+          example: Java Backend Developer
+        tests:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tests"
+    Directions:
+      type: array
+      items:
+        $ref: "#/components/schemas/Direction"
+    Test:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        test_id:
+          type: integer
+          example: 1
+        name:
+          description: Название теста
+          type: string
+          example: cvService
+        description:
+          description: Описание теста
+          type: string
+          example: test for java backend developer
+        directions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Directions"
+    Tests:
+      type: array
+      items:
+        $ref: "#/components/schemas/Test"
+    Candidate:
+      type: object
+      required:
+        - firstname
+        - lastname
+      properties:
+        candidate_id:
+          type: integer
+          example: 1
+        firstname:
+          description: Имя кандидата
+          type: string
+          example: Егор
+        lastname:
+          description: Фамилия кандидата
+          type: string
+          example: Погоцкий
+        secondname:
+          description: Отчество кандидата
+          type: string
+          example: Станиславович
+        photo:
+          description: Фото кандидата (путь к файлу в системе)
+          type: string
+          example: C:\user\Pogockiy_ES_Photo.png
+        cv:
+          description: CV кандидата (путь к файлу в системе)
+          type: string
+          example: C:\user\Pogockiy_ES_CV.png
+        description:
+          description: Дополнительная информация о кандидате
+          type: string
+          example: Подходящий кандидат
+    Candidates:
+      type: array
+      items: 
+        $ref: "#/components/schemas/Candidate"
+    CompletedTest:
+      type: object
+      required: 
+        - candidate
+        - test
+      properties:
+        completed_test_id:
+          type: integer
+          example: 1
+        candidate:
+          $ref: "#/components/schemas/Candidate"
+        test: 
+          $ref: "#/components/schemas/Test"
+        testResults:
+          type: array
+          items:
+            $ref: "#/components/schemas/TestResult"
+    TestResult:
+      type: object
+      required:
+        - test_id
+        - grade
+        - date
+      properties:
+        testResult_id:
+          type: integer
+          example: 1
+        grade:
+          type: integer
+          example: 10
+        date:
+          type: string
+          example: "2023-11-07"
+        completedTest_id:
+          type: integer
+          example: 1
+        

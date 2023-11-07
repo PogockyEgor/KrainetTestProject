@@ -27,8 +27,8 @@ public class CompletedTest {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "completedTests_id_seq_gen")
-    @SequenceGenerator(name = "completedTests_id_seq_gen", sequenceName = "completedTests_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "completed_tests_id_seq_gen")
+    @SequenceGenerator(name = "completed_tests_id_seq_gen", sequenceName = "completed_tests_id_seq", allocationSize = 1)
     private Integer id;
 
     @ManyToOne

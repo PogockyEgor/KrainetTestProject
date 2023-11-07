@@ -1,6 +1,5 @@
 package com.KrainetTestProject.controllers;
 
-import com.KrainetTestProject.model.domain.Test;
 import com.KrainetTestProject.model.request.TestRequest;
 import com.KrainetTestProject.model.response.TestResponse;
 import com.KrainetTestProject.service.Imp.TestServiceImpl;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping(value = "/test")
 public class TestController {
 
     TestServiceImpl testService;
@@ -44,13 +43,13 @@ public class TestController {
     public ResponseEntity<?> createDirection(@RequestBody TestRequest testRequest) {
         logger.info("post request to /test");
         testService.createTest(testRequest);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> updateDirection(@RequestBody Test test) {
+    public ResponseEntity<?> updateDirection(@RequestBody TestRequest testRequest, int testId) {
         logger.info("put request to /test");
-        testService.updateTest(test);
+        testService.updateTest(testRequest, testId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
